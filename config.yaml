@@ -1,0 +1,10 @@
+# agents: producer names that are machines, not people (SPEC §3, is_trust).
+# Mirrors cause-channel's config.yaml agents list for consistency.
+agents:
+  - claude-desktop
+  - claude-web
+  - cursor
+  - loan-agent
+  - network-system
+  - cs-agent
+  - accounting-agent

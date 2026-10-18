@@ -1,0 +1,36 @@
+# T-knowledge Personal: your own store on your own machine.
+#
+#   TK_OWNER=you@example.com TK_DB_PASSWORD=<a long password> docker compose up -d
+#   docker compose logs tk | grep "private link" -A1
+#
+# Connect your assistant to the private link it prints. Everything stays in the
+# two volumes below; nothing leaves the machine unless you put it on a domain.
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: ${TK_DB_PASSWORD:?set TK_DB_PASSWORD}
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 2s
+      retries: 30
+    restart: unless-stopped
+  tk:
+    image: tknowledge/tk-personal:latest
+    build: .
+    environment:
+      TK_OWNER: ${TK_OWNER:?set TK_OWNER to your email}
+      TK_DB_PASSWORD: ${TK_DB_PASSWORD}
+      TK_PUBLIC_URL: ${TK_PUBLIC_URL:-http://localhost:8080}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      MAIL_FROM: ${MAIL_FROM:-}
+      TK_SITE_URL: ${TK_SITE_URL:-}
+    ports: ["127.0.0.1:8080:8080"]
+    volumes: [tkdata:/data]
+    depends_on:
+      postgres: { condition: service_healthy }
+    restart: unless-stopped
+volumes:
+  pgdata:
+  tkdata:

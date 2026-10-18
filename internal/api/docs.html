@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docs — T-knowledge</title>
+<meta name="description" content="How to connect T-knowledge to Claude, Claude Code or a script, what the store holds, its tools, its refusals and its limits.">
+<style>
+  :root { --ground:#f4f6f8; --surface:#fff; --ink:#15181c; --muted:#5b6470; --line:#dbe0e6; --inset:#12161a; --inset-ink:#dfe4ea;
+          --body:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; --mono:ui-monospace,"SF Mono",Menlo,monospace; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ground:#0f1214; --surface:#16191d; --ink:#e7eaee; --muted:#99a2ad; --line:#262c33; --inset:#0a0d0f; } }
+  :root[data-theme="dark"] { --ground:#0f1214; --surface:#16191d; --ink:#e7eaee; --muted:#99a2ad; --line:#262c33; --inset:#0a0d0f; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.6; }
+  .wrap { max-width:48rem; margin:0 auto; padding:1.5rem 16px 4rem; }
+  nav { display:flex; justify-content:space-between; gap:1rem; font-size:.9rem; padding-bottom:1.2rem; border-bottom:1px solid var(--line); }
+  nav a { color:var(--muted); text-decoration:none; margin-left:1rem; }
+  .brand { font-family:var(--mono); letter-spacing:.12em; text-transform:uppercase; font-size:.78rem; color:var(--ink) !important; margin:0 !important; }
+  h1 { font-size:1.9rem; margin:2rem 0 .3rem; } h2 { font-size:1.25rem; margin:2.2rem 0 .5rem; } h3 { font-size:1rem; margin:1.2rem 0 .3rem; }
+  p, li { max-width:44rem; } ul, ol { padding-left:1.2rem; } li { margin-bottom:.35rem; }
+  a { color:inherit; text-underline-offset:3px; }
+  code { font-family:var(--mono); font-size:.88em; }
+  pre { background:var(--inset); color:var(--inset-ink); border-radius:8px; padding:.8rem 1rem; overflow-x:auto; font-family:var(--mono); font-size:.82rem; }
+  table { border-collapse:collapse; width:100%; font-size:.92rem; } .scroll { overflow-x:auto; }
+  th, td { text-align:left; padding:.45rem .7rem .45rem 0; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-size:.76rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  td:first-child { font-family:var(--mono); font-size:.84rem; white-space:nowrap; }
+  .small { font-size:.88rem; color:var(--muted); }
+  footer { margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--line); font-size:.85rem; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="brand" href="/">T-knowledge</a><span><a href="/">Home</a><a href="/privacy">Privacy</a><!--site--><a href="{{SITE}}">{{SITE_NAME}}</a><!--/site--></span></nav>
+
+  <h1>Docs</h1>
+  <p>T-knowledge is a store for an assistant's knowledge in which every line is a principle, a checked claim (T) or an assumption (A), signed by a named person, with the ids it rests on. It is reached as an MCP server.</p>
+
+  <h2>Connect</h2>
+  <h3>Claude — web, Desktop, mobile</h3>
+  <ol>
+    <li>Settings → Connectors → Add custom connector.</li>
+    <li>URL: <code>{{MCP_URL}}</code></li>
+    <li>When Claude first calls a tool that needs your store, it shows Connect. Enter your email; a six-digit code is sent to that inbox. Paste it in. Your first sign-in opens a store of your own.</li>
+  </ol>
+  <h3>Claude Code</h3>
+  <pre>claude mcp add --transport http tk {{MCP_URL}}</pre>
+  <p>Then <code>/mcp</code>, pick <code>tk</code>, and sign in.</p>
+  <h3>Cursor, scripts, mcp-remote</h3>
+  <p>Connect to <code>{{MCP_URL}}</code> with the header <code>Authorization: Bearer &lt;key&gt;</code>.<!--contact--> For a key, write to <a href="mailto:{{CONTACT}}">{{CONTACT}}</a>; it comes with a private link that holds the key on its own — treat it like a password.<!--/contact--> Not yet tried on Cursor itself.</p>
+
+  <h2>What the store holds</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Kind</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr id="claim"><td>claim</td><td>A statement about the world that can be checked against a source. Every T and every A is one.</td></tr>
+      <tr id="principle"><td>P.n</td><td>A principle: an axiom, added and retired, never rewritten. A new store starts with seven.</td></tr>
+      <tr id="truth"><td>T-n</td><td>A claim that passed the gate — a fact backed by a document, or a conclusion from at least two standing entries. Its wording never changes.</td></tr>
+      <tr id="assumption"><td>A-n</td><td>An assumption, with what would settle it. Promoted to T when the evidence arrives, refuted when the opposite is observed.</td></tr>
+      <tr id="document"><td>D-n</td><td>A document: readable text plus a pointer to the original (which stays where you keep it), and how you looked at it. <i>Bound</i> when a URL and hash tie the text to an original, <i>unbound</i> when it is text alone — both are valid evidence.</td></tr>
+      <tr id="thread"><td>TH-n</td><td>A thread: one matter you follow, with keywords, linking the entries, people and conversations that belong to it.</td></tr>
+      <tr id="instruction"><td>I-n</td><td>An instruction: how an assistant should use this store — a meta line (M1), a directive (1, 2 …) or a definition (def:claim). Not a claim and not a principle; added or retired, never edited.</td></tr>
+      <tr id="summary"><td>S-n</td><td>A summary of a thread: always an A, with a named author; each sentence cites ids in the thread; marked stale when newer entries arrive.</td></tr>
+      <tr id="conversation"><td>conv_n</td><td>A conversation: a chat or message trail linked to a matter, kept as context — it informs, it is not cited as proof.</td></tr>
+      <tr id="flag"><td>F-n</td><td>A flag: something needs a person — evidence withdrawn, a source that changed between readings. The store raises it instead of resolving it quietly.</td></tr>
+      <tr id="attester"><td>attester</td><td>A person who stands behind a claim by adding their own document for it.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Tools</h2>
+  <p class="small">The assistant picks these on its own; you talk in plain language.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Tool</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td>assume · update_assumption</td><td>Hold something not yet checked, and revise it while it is open.</td></tr>
+      <tr><td>document_add</td><td>Record evidence as text, with where the original is.</td></tr>
+      <tr><td>admit · promote</td><td>Put a checked claim into the ledger; raise an assumption once its evidence is in.</td></tr>
+      <tr><td>attest · withdraw_evidence</td><td>Add or withdraw a document behind a claim.</td></tr>
+      <tr><td>demote · retire · recheck · refute</td><td>Take down what no longer holds; record that a source was checked again; refute an assumption.</td></tr>
+      <tr><td>principles · principle_add · principle_retire</td><td>Read, add or retire principles; retiring one lists everything standing on it.</td></tr>
+      <tr><td>instructions · instruction_add · instruction_retire</td><td>How assistants use your store, kept in the store: one list for every project — meta lines about the list, numbered directives, and definitions of the store's concepts. Added or retired, never edited; wording already there is caught as for claims.</td></tr>
+      <tr><td>store_info</td><td>Who maintains this deployment and where to send feedback when tk misbehaves.</td></tr>
+      <tr><td>thread_open · thread_tag · link · unlink · thread_close</td><td>Group entries into a matter you follow.</td></tr>
+      <tr><td>summarize</td><td>Write a reading of a thread — drafted by the assistant, approved by you, every sentence citing ids.</td></tr>
+      <tr><td>ledger · entry · chain · open_items · thread · lookup · documents · flags</td><td>Read: what is known, one entry, what it stands on, what is still open, a thread, search by keyword, documents, warnings.</td></tr>
+      <tr><td>check_claim · define</td><td>Ask whether a sentence is a claim yet, and what the store's words mean. These work before signing in.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Refusals</h2>
+  <p>A refusal is an answer, not an error. It comes with a code, a sentence saying why, and <code>next</code> — the move still open — so the assistant can tell you what to write instead. Common ones:</p>
+  <ul>
+    <li><code>CLAIM_FAILED</code> — not a claim yet: two sentences in one, a relative date, a person not named.</li>
+    <li><code>NO_SOURCE</code> — a fact names no document, or not where in it the claim is read.</li>
+    <li><code>SINGLE_PREMISE</code> — a derivation needs at least two premises.</li>
+    <li><code>PREMISE_NOT_FOUND</code> — a premise id is not in the truth ledger (an assumption is not).</li>
+    <li><code>USE_PROMOTE</code> — that sentence is already an open assumption; promote it with evidence.</li>
+    <li><code>SOURCE_NOT_RETRIEVABLE</code>, <code>USE_DOCUMENT</code> — a fact needs a document someone else could open.</li>
+    <li><code>PREMISE_NOT_T</code> — a conclusion cannot stand on something that has fallen.</li>
+    <li><code>SUMMARY_UNCITED</code> — a sentence in a summary cites no entry of the thread.</li>
+    <li><code>CLAIM_TOO_MANY_WORDS</code>, <code>WRITE_LIMIT_REACHED</code> — a store's limits.</li>
+  </ul>
+  <p class="small">Every refusal carries its own reason and <code>next</code>. Ask the assistant to run <code>define</code> on a word of the store — claim, T, A, evidence, promote … — for the store's own explanation.</p>
+
+  <h2>Limits of a trial store</h2>
+  <p>{{TERMS}}; up to {{WORDS}} words per claim. When the writes run out the store stays readable.</p>
+
+  <h2>Support</h2>
+  <p><!--site--><a href="{{SITE}}">{{SITE_NAME}}</a><!--/site--><!--contact--> · <a href="mailto:{{CONTACT}}">{{CONTACT}}</a><!--/contact--> · <a href="/privacy">Privacy</a></p>
+
+  <footer>Build {{VERSION}}</footer>
+</div>
+</body>
+</html>

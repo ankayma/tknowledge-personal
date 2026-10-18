@@ -1,0 +1,380 @@
+{
+  "lang": "en",
+  "version": "1.0.0 (2026-09-28)",
+  "definitions": [
+    {
+      "term": "claim",
+      "short": "One sentence that says something about the world, and can be checked by someone who was not in the room.",
+      "definition": "A claim is the unit this store keeps. It is not any piece of text: a note, a question, a task, an opinion and a heading are all text, and none of them is a claim. The store's whole discipline — trusted or assumed, raised or lowered — applies to claims and to nothing else, which is why every write checks this first.",
+      "rules": [
+        "atomic — one proposition. Several only when they are one inseparable unit. If half of it could be wrong while the other half is right, it is two claims.",
+        "decontextualized — it stands alone. Every person named rather than referred to; every time absolute rather than relative; nothing that needs the conversation it came from.",
+        "checkable — an assertion about the world, against which evidence can be held. Not an opinion, not a private experience, not a promise about the future."
+      ],
+      "why": [
+        "A claim that only makes sense inside one conversation cannot be audited later, and the person who signed it carries that.",
+        "A sentence holding three claims cannot be raised or lowered honestly: one part falls and drags the rest, or stands and carries the rest.",
+        "If nothing in the world could settle it, then calling it trusted means nothing at all."
+      ],
+      "good": [
+        "Halden Ltd is a UAE legal entity since 09/2026",
+        "Lan Nguyen (founder) is a shareholder of Halden Ltd",
+        "Acme renews the contract before 2026-12-31"
+      ],
+      "bad": [
+        "\"Halden Ltd is a UAE legal entity that just opened\" — \"just opened\" moves with the reading date, so there is no fixed thing to check.",
+        "\"The owner is a shareholder of Halden Ltd\" — who \"owner\" is depends on who reads it; name the person.",
+        "\"Tốc độ quan trọng nhất\" — an evaluation; no document settles it.",
+        "\"Đọc Matt: đang chạy bước 1–2. Sau khi thấy value: pilot nhỏ. Với dân code: repo là cái thấy để trust.\" — three claims in one field."
+      ],
+      "see_also": [
+        "check_claim",
+        "T",
+        "A"
+      ],
+      "decided": "owner 28/9/2026: T/A applies to claims, so the claim is checked before anything is created; and a claim names the person and gives the absolute date.",
+      "source": "The three conditions are the ones claim extraction for fact-checking uses (atomic · decontextualized · check-worthy); the second rests on Quine's eternal sentence — a sentence whose truth value does not vary with the time or the speaker.",
+      "not_guaranteed": [
+        "Passing the check does not make a sentence true, and does not make it a claim: the machine decides the part that is decidable from the words, and names the rest for the signer."
+      ]
+    },
+    {
+      "term": "check_claim",
+      "short": "Ask whether a sentence is a claim yet, and get the reasons — before spending a write.",
+      "definition": "check_claim reads a sentence against the three conditions and answers with what it found: for each problem, the words at fault, why they cannot be part of a claim, and what to write instead. It never answers with a bare yes or no, because a person cannot act on a verdict. It reads nothing and writes nothing, so asking first costs nothing. The same check runs inside assume, admit, promote and update_assumption, so a sentence cannot get in by skipping it — there the answer is the refusal CLAIM_FAILED, carrying those same reasons.",
+      "rules": [
+        "signer_checks lists what no machine can decide. The signer carries a claim that is later demoted, so they are owed the list of what they are signing for.",
+        "basis narrows the third condition: an assumption is allowed to be about the future — that is what A-p is for — and a derivation from principles is allowed to be normative."
+      ],
+      "bad": [
+        "Bare \"vừa\" and bare \"sắp\" are not caught: in Vietnamese they also mean to fit and to arrange (\"vừa đủ\", \"sắp xếp\"), so refusing them would refuse well-formed claims. That remainder is the signer's."
+      ],
+      "see_also": [
+        "claim",
+        "signer"
+      ],
+      "decided": "owner 28/9/2026: the check returns the reasons so an assistant can answer the person, not true/false; and it is a function inside admit and assume, not a step outside them."
+    },
+    {
+      "term": "T",
+      "aliases": [
+        "truth",
+        "truth ledger",
+        "truth_ledger",
+        "trusted"
+      ],
+      "short": "A claim that passed the gate. Truth · trust · traceable — the store guarantees the last two.",
+      "definition": "T is a claim in the truth ledger. It got there by showing a basis the store could check the form of: either a fact with evidence someone else can open, or a derivation from at least two things that already stand. Its wording never changes afterwards. Nothing about T is a claim that the store knows it to be true.",
+      "rules": [
+        "Content is immutable. A different sentence is a different claim, admitted on its own.",
+        "Never deleted, never edited — not by the API, not by a database owner: the tables refuse UPDATE and DELETE at schema level.",
+        "status is not a column. It is read from the entry's history, so no write overwrites what an earlier write said.",
+        "effective is read at read time: a T whose premise has fallen reads needs_review. A machine never lowers an entry — lowering is a named act by a person, with a reason."
+      ],
+      "why": [
+        "trust: every row carries the name of a person who signed it. An agent may produce a row, never sign one.",
+        "traceable: every row keeps its basis, its evidence or its premises, and its whole history. A fact points at a link or at a document this store holds, so a reader can go and look."
+      ],
+      "see_also": [
+        "claim",
+        "A",
+        "fact",
+        "derivation",
+        "promote",
+        "demote"
+      ],
+      "not_guaranteed": [
+        "truth: the store does not decide it and does not claim to. It checks that a basis is there and has the right shape. Whether the source really says this, and whether the chain really holds, is the signer's work — which is why demote exists, and why a demoted T is a person's mistake, not the store's."
+      ]
+    },
+    {
+      "term": "A",
+      "aliases": [
+        "assumption",
+        "assumptions"
+      ],
+      "short": "A claim the store holds without trusting: an assumption, with the way out it must declare.",
+      "definition": "A is a claim in the assumption table. It asserts nothing about the world being so; it records that someone is working from it. Every assumption must declare how it ends, because an assumption with no way out runs forever and quietly becomes a belief. While it is open the owner may edit it, and the old wording stays in history.",
+      "rules": [
+        "Four kinds, no fifth: A-r, A-c, A-p, A-b. Each takes its own tail and only that one.",
+        "Editable while open; once promoted, refuted or retired the wording is part of the record.",
+        "Never deleted.",
+        "Changing the claim means restating the way out: an observation written for the old wording usually no longer settles the new one."
+      ],
+      "why": [
+        "A store that only kept what it trusted would push everything else into people's heads, where nothing can be audited."
+      ],
+      "see_also": [
+        "A-r",
+        "A-c",
+        "A-p",
+        "A-b",
+        "T",
+        "promote"
+      ]
+    },
+    {
+      "term": "A-r",
+      "aliases": [
+        "reading aid"
+      ],
+      "short": "Reading aid: a way of putting something, deliberately never raised to T.",
+      "definition": "An A-r is there to help a reader, not to assert anything. It is the home for a rereading — including a conclusion drawn from a single premise, which is a rereading of that premise rather than an inference from it.",
+      "rules": [
+        "No tail: there is nothing to settle.",
+        "promote always refuses it."
+      ],
+      "see_also": [
+        "A",
+        "derivation"
+      ]
+    },
+    {
+      "term": "A-c",
+      "aliases": [
+        "chosen bet"
+      ],
+      "short": "Chosen bet: closed by amending a principle, not by observing the world.",
+      "definition": "An A-c is a position taken on purpose. No observation settles it, because it was a choice; what closes it is an amendment to the rule it bets on.",
+      "rules": [
+        "Declares via: the amendment that would close it.",
+        "promote refuses it: RESOLVE_BY_AMENDMENT."
+      ],
+      "see_also": [
+        "A",
+        "P"
+      ]
+    },
+    {
+      "term": "A-p",
+      "aliases": [
+        "pending"
+      ],
+      "short": "Pending: an observation would settle it, and the assumption says which one.",
+      "definition": "An A-p is the ordinary assumption: something that will turn out one way or the other. It declares if: the observation that raises it and not: the observation that refutes it. When if: happens, promote raises it — carrying the wording over unchanged, which is why an A-p must be written from the start in a form that will still read correctly then.",
+      "rules": [
+        "Declares both if: and not:.",
+        "promote carries the claim over word for word; it never rewrites."
+      ],
+      "good": [
+        "\"Acme renews the contract before 2026-12-31\" — still reads correctly the day it is settled."
+      ],
+      "bad": [
+        "\"Acme will renew this quarter\" — can never become a T: \"will\" and \"this quarter\" both fail the claim conditions, and promote cannot fix the wording."
+      ],
+      "see_also": [
+        "A",
+        "promote",
+        "claim"
+      ]
+    },
+    {
+      "term": "A-b",
+      "aliases": [
+        "blocked"
+      ],
+      "short": "Blocked: waiting resolves nothing, because the channel that would settle it does not exist yet.",
+      "definition": "An A-b names the channel that has to be built before any observation is possible. Its point is to stop a decision being deferred behind something nobody is building.",
+      "rules": [
+        "Declares via: the channel to build.",
+        "promote refuses it: CHANNEL_BLOCKED. Build the channel, update_assumption to A-p, then promote."
+      ],
+      "see_also": [
+        "A",
+        "promote"
+      ]
+    },
+    {
+      "term": "P",
+      "aliases": [
+        "principle",
+        "principles",
+        "principle list"
+      ],
+      "short": "A principle: an axiom this store reasons from. Added, never rewritten.",
+      "definition": "The Principle List is the one class with no basis underneath it — a principle is not derived, it is committed to. That is why it cannot be audited by reasoning and is checked against the world from outside instead. Rewriting one would silently change every claim standing on it, so a principle is only ever added or retired, and retiring one names every T that was resting on it.",
+      "rules": [
+        "Add-only. A new statement is a new code; the old one is retired.",
+        "Retiring names what stood on it, so the cost is visible before it is paid.",
+        "Numbering is the owner's. A gap (P.6, P.7 missing) is not an error."
+      ],
+      "see_also": [
+        "T",
+        "derivation",
+        "premise"
+      ],
+      "decided": "owner 19/9/2026: a principle is never edited — \"sửa principle là gần như bỏ cả kho ledger\"."
+    },
+    {
+      "term": "fact",
+      "short": "A basis: the claim rests on evidence someone other than the writer can open.",
+      "definition": "A fact carries a citation saying where to look, plus the evidence itself: source_url, a public link, or source_doc, a document this store holds with its sha256 so it cannot change under the claim. The writer's own word is not evidence. A claim only the writer can vouch for is an assumption, and assume is where it goes.",
+      "rules": [
+        "source says where in the evidence to look. It does not replace the evidence.",
+        "One of source_url or source_doc is required: without either, SOURCE_NOT_RETRIEVABLE. An entry cited as evidence is never enough on its own — something openable is always required, or claims could cite each other and never touch the world.",
+        "source_entry cites an entry already standing that carries part of the evidence the document cannot: the date, the occasion. Minutes prove what was agreed but carry no date; the entry for the meeting carries it. It is evidence, not a premise — premises are claims, and a document is not one. If it falls, this claim reads needs_review.",
+        "A fact carries no premises and no chain.",
+        "valid_until is a fact's own expiry, when it has one."
+      ],
+      "see_also": [
+        "T",
+        "evidence",
+        "document",
+        "recheck"
+      ],
+      "decided": "owner 28/9/2026: \"ko có link / doc thì từ chối\"; the store keeps the bytes, with a size limit, because evidence held only as a hash disappears with the machine that deleted the file.",
+      "not_guaranteed": [
+        "The store does not read the evidence. That the document says what the claim says is the signer's to check — and what recheck records."
+      ],
+      "good": [
+        "Two sources for one fact: source_doc the minutes, source_entry the entry for the meeting that dates them."
+      ]
+    },
+    {
+      "term": "derivation",
+      "short": "A basis: the claim follows from at least two things that already stand.",
+      "definition": "A derivation names its premises — principles, entries in the ledger, or both — and the chain that leads from them to the claim, written so a reader can rebuild it without looking anywhere else. At least two premises, because from one premise nothing new follows: what comes out is that premise read again. Requiring the second is also what drags the hidden step out of the prose — a chain that says \"P.1, therefore X\" is leaning on a claim it has not named, and that unnamed claim is the one nobody has audited.",
+      "rules": [
+        "At least two premises, and a premise is a claim — P.x or T-…, never a document. From the content of those two claims a new claim is reasoned out. One premise gets SINGLE_PREMISE, and its home is assume(type: \"A-r\").",
+        "Every premise must stand at the time of writing: a fallen premise carries nothing new.",
+        "No evidence of its own — evidence belongs to the facts underneath it.",
+        "If a premise later falls, the claim reads needs_review. It is flagged, never silently kept and never machine-lowered."
+      ],
+      "see_also": [
+        "T",
+        "premise",
+        "P",
+        "A-r"
+      ],
+      "decided": "owner 28/9/2026: \"derivation thì phải từ 2 T (P hoặc T) trở lên. Còn nếu ko thì chỉ là diễn dịch.\"",
+      "not_guaranteed": [
+        "The store checks that the premises exist and stand. Whether the chain actually holds is the signer's — a chain can name real premises and still not follow."
+      ]
+    },
+    {
+      "term": "evidence",
+      "short": "What a person other than the writer can open and read for themselves.",
+      "definition": "Two forms, and only two: a public link, or a document stored here. A citation is not evidence — it says where to look, which helps only if the thing can be looked at. This is the sentence-level and source-level halves of the same rule: a claim must be checkable, and its source must be reachable.",
+      "see_also": [
+        "fact",
+        "document",
+        "claim"
+      ]
+    },
+    {
+      "term": "document",
+      "short": "A file this store holds as evidence, with its sha256.",
+      "definition": "A licence, a contract, a signed page, a screenshot, an email: things with no public link. The store keeps the bytes, so the evidence survives the machine it came from, and the hash, so nobody can change the file under a claim that cites it. Documents are append-only like the ledger, and the same bytes added twice are one document.",
+      "rules": [
+        "Never edited, never removed.",
+        "Referenced from a fact as source_doc."
+      ],
+      "see_also": [
+        "fact",
+        "evidence"
+      ]
+    },
+    {
+      "term": "premise",
+      "short": "Something a derivation stands on: a principle or an entry that already stands.",
+      "definition": "A premise is a claim a derivation reasons from, named by id — P.x for a principle, T-… for a ledger entry. Only a claim can be a premise: a document holds no claim, so it is cited as evidence instead. The store follows premises: chain shows every link under a claim and whether each still holds.",
+      "see_also": [
+        "derivation",
+        "P",
+        "T"
+      ]
+    },
+    {
+      "term": "promote",
+      "short": "Raise an assumption whose if: has actually been observed.",
+      "definition": "promote turns an open A-p into a T, with the basis that settles it. The claim carries over word for word: a different sentence is a different claim, admitted on its own. A-r is never raised, A-c closes by amendment, A-b needs its channel built first.",
+      "rules": [
+        "Only A-p, only while open.",
+        "The wording is never rewritten. To change it, update_assumption while the assumption is still open, then promote."
+      ],
+      "see_also": [
+        "A-p",
+        "T",
+        "update_assumption"
+      ],
+      "decided": "owner 25/9/2026: there is no rewriting of a claim between A and T."
+    },
+    {
+      "term": "update_assumption",
+      "short": "Edit an assumption while it is still open; the old wording stays in history.",
+      "definition": "An assumption is the one place wording may change, and only while it is open. Nothing is quietly replaced: the previous wording is written into the entry's history. Once it has been promoted, refuted or retired, its wording is part of the record and a new claim is the only way forward.",
+      "rules": [
+        "Only while open.",
+        "Changing the claim means restating the way out — an observation written for the old wording usually no longer settles the new one.",
+        "The new wording is checked as a claim, like any other."
+      ],
+      "see_also": [
+        "A",
+        "promote",
+        "claim"
+      ]
+    },
+    {
+      "term": "demote",
+      "short": "A person lowers a T back to an assumption's standing, with the reason.",
+      "definition": "demote is a named act, not something a machine does. The claim keeps its id and its wording; a line is added to its history saying who lowered it, why, and what contradicted it. The signer of that claim carries it — which is the reason the store is strict at the gate rather than forgiving.",
+      "rules": [
+        "Requires a reason.",
+        "contradicted_by names the outside source, when there is one.",
+        "Nothing is erased: the entry stays readable so everything that ever rested on it can still be traced."
+      ],
+      "see_also": [
+        "T",
+        "retire",
+        "recheck",
+        "signer"
+      ]
+    },
+    {
+      "term": "retire",
+      "short": "Close an entry for good: it stops being live, and stays readable.",
+      "definition": "retire ends an entry's life without removing it, and names everything that was resting on it. A principle has its own door: principle_retire.",
+      "rules": [
+        "Requires a reason.",
+        "Returns what was standing on it."
+      ],
+      "see_also": [
+        "demote",
+        "P"
+      ]
+    },
+    {
+      "term": "recheck",
+      "short": "Record that a person went back to a fact's source and it still holds.",
+      "definition": "Only a fact has somewhere to go back to. A derivation is re-derived instead, which is a reading, not a write — chain shows every link and whether it still stands.",
+      "see_also": [
+        "fact",
+        "derivation"
+      ]
+    },
+    {
+      "term": "signer",
+      "short": "The person a row is written in the name of. Never a machine.",
+      "definition": "Every entry carries a signer and a producer: the person who stands behind the claim, and the agent that produced the row. An agent may produce, never sign. When an audit later demotes a claim, it is the signer who carries it — so the store refuses a write signed by an agent, and refuses a claim that cannot be checked at all.",
+      "rules": [
+        "Taken from the grant, never from the request body.",
+        "A grant whose user_id is an agent is refused: SIGNER_IS_AGENT."
+      ],
+      "see_also": [
+        "T",
+        "demote",
+        "claim"
+      ]
+    },
+    {
+      "term": "effective",
+      "short": "What an entry reads as right now, computed at read time.",
+      "definition": "status is what people did to an entry, read from its history. effective is status plus one thing the store notices for itself: a standing T whose premise has fallen reads needs_review. The machine flags; it never lowers. Lowering is demote, and that is a person's act with a reason.",
+      "see_also": [
+        "T",
+        "demote",
+        "premise"
+      ]
+    }
+  ]
+}

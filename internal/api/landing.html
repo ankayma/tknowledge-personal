@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T-knowledge</title>
+<meta name="description" content="T-knowledge — knowledge sovereignty: the AI proposes, a person signs. Add it to Claude and try it in five minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground:  #f4f6f8;
+    --surface: #ffffff;
+    --ink:     #15181c;
+    --muted:   #5b6470;
+    --line:    #dbe0e6;
+    --refuse:  #a8321e;
+    --stands:  #1c5a3c;
+    --inset:   #12161a;
+    --inset-ink: #dfe4ea;
+    --inset-muted: #7d8794;
+    --display: "Newsreader", Georgia, "Times New Roman", serif;
+    --body: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:  #0f1214; --surface: #16191d; --ink: #e7eaee; --muted: #99a2ad;
+      --line: #262c33; --refuse: #e08a76; --stands: #79c19b;
+      --inset: #0a0d0f; --inset-ink: #dfe4ea; --inset-muted: #767f8b;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:  #0f1214; --surface: #16191d; --ink: #e7eaee; --muted: #99a2ad;
+    --line: #262c33; --refuse: #e08a76; --stands: #79c19b;
+    --inset: #0a0d0f; --inset-ink: #dfe4ea; --inset-muted: #767f8b;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ground); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 50rem; margin: 0 auto; padding-inline: 16px; padding-block: 1.5rem 5rem; }
+  @media (max-width: 40rem) { body { font-size: 16px; } }
+
+  nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+        font-size: .9rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line); }
+  nav .brand { font-family: var(--mono); letter-spacing: .12em; text-transform: uppercase; font-size: .78rem; }
+  nav .links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  nav a { color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+
+  header { padding: 3rem 0 2.5rem; border-bottom: 1px solid var(--line); }
+  h1 { font-family: var(--display); font-weight: 400; font-size: clamp(2.4rem, 7vw, 3.4rem);
+       line-height: 1.08; margin: 0 0 .4rem; letter-spacing: -.01em; }
+  .tagline { font-family: var(--mono); font-size: .95rem; color: var(--stands); margin: 0 0 1.6rem; }
+  .cta { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin-top: 2rem; }
+
+  h2 { font-family: var(--display); font-weight: 500; font-size: 1.55rem;
+       margin: 3.2rem 0 .4rem; letter-spacing: -.005em; }
+  .eyebrow { font-family: var(--mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+             color: var(--muted); margin: 3.2rem 0 0; }
+  .eyebrow + h2 { margin-top: .3rem; }
+  p { margin: 0 0 1rem; max-width: 42rem; }
+  a { color: inherit; text-decoration-color: var(--muted); text-underline-offset: 3px; }
+
+  .sub { font-family: var(--display); font-size: clamp(1.2rem, 3.2vw, 1.45rem); line-height: 1.35; margin: 0 0 1.4rem; max-width: 40rem; }
+  .quote-q { font-family: var(--display); font-size: 1.15rem; line-height: 1.4; border-left: 2px solid var(--stands); padding-left: .9rem; }
+  a.src { font-size: .82rem; color: var(--muted); }
+  header .tagline { margin: 0 0 1.2rem; }
+  .hero-lines { list-style: none; padding: 0; margin: 0 0 1.2rem; }
+  .hero-lines li { padding: .45rem 0; border-bottom: 1px solid var(--line); max-width: 42rem; }
+  .steps > li > p { margin: .15rem 0 .4rem; font-size: 1.02rem; }
+  .lede { font-family: var(--display); font-size: 1.2rem; margin: .6rem 0 0; }
+
+  /* five steps */
+  .steps { list-style: none; counter-reset: step; padding: 0; margin: 1.2rem 0 0; }
+  .steps > li { counter-increment: step; position: relative; padding: 1rem 0 1rem 2.6rem; border-bottom: 1px solid var(--line); }
+  .steps > li::before { content: counter(step); position: absolute; left: 0; top: 1rem; width: 1.8rem; height: 1.8rem;
+                        border-radius: 999px; background: var(--ink); color: var(--ground); font-weight: 600;
+                        display: grid; place-items: center; font-size: .9rem; }
+  .steps h3 { font-family: var(--display); font-weight: 500; font-size: 1.15rem; margin: 0 0 .35rem; }
+  .steps p { margin: 0 0 .4rem; }
+
+  /* what it does */
+  .does { list-style: none; padding: 0; margin: 1rem 0 0; }
+  .does li { padding: .85rem 0; border-bottom: 1px solid var(--line); display: grid; gap: .25rem; }
+  .does b { font-family: var(--display); font-weight: 500; font-size: 1.12rem; }
+  .does span { color: var(--muted); font-size: .97rem; }
+  .does.one li { display: block; font-family: var(--display); font-size: 1.1rem; line-height: 1.4; }
+
+
+  /* buttons, fields */
+  button, .btn {
+    font-family: var(--body); font-size: 1rem; font-weight: 600; text-decoration: none;
+    background: var(--ink); color: var(--ground); border: 0; border-radius: 8px;
+    padding: .72rem 1.25rem; cursor: pointer; display: inline-block;
+  }
+  .btn.ghost, button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+  button:hover, .btn:hover { opacity: .88; }
+  button:disabled { opacity: .5; cursor: default; }
+  button:focus-visible, .btn:focus-visible, a:focus-visible { outline: 2px solid var(--stands); outline-offset: 2px; }
+  button.copy { font-size: .8rem; padding: .3rem .7rem; background: transparent; color: var(--inset-ink);
+                border: 1px solid var(--inset-muted); border-radius: 6px; }
+  .field {
+    font-family: var(--mono); font-size: .82rem; background: var(--inset);
+    color: var(--inset-ink); border-radius: 8px; padding: .75rem 1rem;
+    word-break: break-all; line-height: 1.55;
+  }
+  .copyrow { display: flex; gap: .75rem; align-items: center; justify-content: space-between;
+             background: var(--inset); border-radius: 8px; padding: .55rem .6rem .55rem 1rem; margin: .5rem 0; }
+  .copyrow code { color: var(--inset-ink); font-size: .82rem; word-break: break-all; }
+  .small { font-size: .88rem; color: var(--muted); }
+  code { font-family: var(--mono); font-size: .88em; }
+
+  /* tabs */
+  .tabs { display: flex; gap: .4rem; flex-wrap: wrap; margin: 1rem 0 0; border-bottom: 1px solid var(--line); }
+  .tabs button { background: transparent; color: var(--muted); border-radius: 0; font-weight: 500;
+                 padding: .55rem .85rem; border-bottom: 2px solid transparent; }
+  .tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+  .panel { padding: 1rem 0 0; }
+  .panel ol { padding-left: 1.2rem; margin: 0 0 .8rem; }
+  .panel li { margin-bottom: .35rem; }
+
+  /* scenes */
+  .scenes { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(14.5rem, 1fr)); margin-top: 1.2rem; }
+  .scene { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.1rem .9rem; }
+  .scene h3 { font-family: var(--display); font-weight: 500; font-size: 1.15rem; margin: .1rem 0 .6rem; }
+  .say { display: flex; gap: .5rem; align-items: flex-start; justify-content: space-between;
+         font-size: .9rem; background: var(--ground); border-radius: 8px; padding: .55rem .65rem; margin: .45rem 0; }
+  .say span { font-style: italic; }
+  .say button.copy { color: var(--muted); border-color: var(--line); flex: none; }
+  .then { font-size: .88rem; color: var(--refuse); margin: .6rem 0 0; }
+  .then.ok { color: var(--stands); }
+
+  /* transcript */
+  details { border-top: 1px solid var(--line); padding: .8rem 0; }
+  details:last-of-type { border-bottom: 1px solid var(--line); }
+  summary { cursor: pointer; font-weight: 600; }
+  details > div, details > p { margin-top: .7rem; }
+  .exchange {
+    background: var(--inset); color: var(--inset-ink); border-radius: 10px;
+    font-family: var(--mono); font-size: .82rem; line-height: 1.7;
+    padding: 1.1rem 1.2rem; overflow-x: auto;
+  }
+  .exchange div { white-space: pre; }
+  .exchange .said, .exchange .note { color: var(--inset-muted); }
+  .exchange .no { color: #e08a76; } .exchange .yes { color: #79c19b; }
+
+  .classes { margin: 1rem 0 0; font-size: .95rem; }
+  .classes dt { font-family: var(--mono); font-size: .85rem; font-weight: 500; padding-top: .7rem; }
+  .classes dd { margin: .2rem 0 0; padding-bottom: .7rem; border-bottom: 1px solid var(--line); }
+
+  /* the trial store box */
+  .open { margin-top: 1.2rem; padding: 1.4rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+  .row { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; margin-top: .75rem; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  input[type="email"] {
+    flex: 1 1 16rem; min-width: 0; font-family: var(--body); font-size: 1rem;
+    color: var(--ink); background: var(--ground); border: 1px solid var(--line);
+    border-radius: 8px; padding: .7rem .9rem;
+  }
+  input[type="email"]:focus-visible { outline: 2px solid var(--stands); outline-offset: 1px; }
+  .terms { list-style: none; padding: 0; margin: .4rem 0 1rem; display: flex; flex-wrap: wrap; gap: .4rem .5rem; }
+  .terms li { font-size: .85rem; border: 1px solid var(--line); border-radius: 999px; padding: .15rem .65rem; }
+  .err { color: var(--refuse); font-size: .92rem; margin-top: .9rem; }
+  .warn { font-size: .85rem; color: var(--refuse); margin: 0 0 .7rem; border-left: 2px solid var(--refuse); padding-left: .7rem; }
+  .result { margin-top: 1.5rem; }
+
+  /* same claim, two outcomes */
+  .outcomes { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin-top: 1rem; }
+  .outcome { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem; }
+  .outcome .tag { font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+  .outcome.t .tag { color: var(--stands); } .outcome.a .tag { color: var(--refuse); }
+  .outcome .claim { font-family: var(--mono); font-size: .82rem; background: var(--ground); border-radius: 8px;
+                    padding: .55rem .65rem; margin: .6rem 0; overflow-wrap: anywhere; }
+  .outcome ol { padding-left: 1.2rem; margin: 0; font-size: .93rem; }
+  .outcome li { margin-bottom: .3rem; }
+  .sub3 { font-family: var(--display); font-weight: 500; font-size: 1.2rem; margin: 2rem 0 0; }
+
+  /* QR: dark on white in every theme, so a camera reads it */
+  .qr { text-align: center; }
+  .qr h2 { margin-top: .3rem; }
+  .qr-box { background: #fff; border-radius: 16px; padding: 12px; width: min(18rem, 80vw); margin: 1rem auto .4rem; }
+  .qr-img { display: block; width: 100%; height: auto; }
+
+  footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); font-size: .88rem; color: var(--muted); }
+  footer .links { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: .6rem; }
+  footer a { color: var(--muted); }
+  @media (prefers-reduced-motion: no-preference) { button, .btn { transition: opacity .15s ease; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <nav>
+    <span class="brand">T-knowledge</span>
+    <span class="links"><a href="#try">Try it</a><a href="/docs">Docs</a><a href="/privacy">Privacy</a><!--site--><a href="{{SITE}}">{{SITE_NAME}}</a><!--/site--></span>
+  </nav>
+
+  <header>
+    <h1>T-knowledge</h1>
+    <p class="tagline">truth · trust · traceable knowledge</p>
+    <p class="sub">Data → information → knowledge. Data becomes information when it has structure — one idea, with names and dates. Information becomes knowledge when it can be trusted without checking again.</p>
+    <p>T-knowledge holds your information and your knowledge; your data stays where it is. Mail, CRM and files are not replaced — the store keeps the text read from a source and where the original is. A claim nobody can check yet is information, held as an [A]. It becomes knowledge, a [T], when it has <b>truth</b> — evidence anyone can open; <b>trust</b> — the name that signed it; <b>traceable</b> — the ids it rests on.</p>
+    <p><b>Sovereignty:</b> the store argues only from principles you hold, and only you sign. The gate shows it, at the moment of writing rather than at a review weeks later. The assistant drafts; a [T] takes your name. Retire a principle or withdraw evidence, and every [T] standing on it falls back to [A] — <i>needs review</i>. Nothing quietly stays true; nothing is thrown away.</p>
+    <p class="small">One signer today, more planned · trial: {{TERMS}} · self-hosting planned.</p>
+    <div class="cta">
+      <a class="btn" href="#try">Add to Claude</a>
+      <a class="btn ghost" href="#how">How it works</a>
+    </div>
+    <div class="copyrow" style="max-width:34rem;margin-top:1rem"><code id="u0">{{MCP_URL}}</code><button class="copy" type="button" data-copy="u0">Copy</button></div>
+  </header>
+
+  <p class="eyebrow" id="try">Try it</p>
+  <h2>Try it in five minutes</h2>
+  <ol class="steps">
+    <li><p>In Claude, open <b>Settings → Connectors → Add custom connector</b> and paste this link.</p>
+      <div class="copyrow"><code id="u1">{{MCP_URL}}</code><button class="copy" type="button" data-copy="u1">Copy</button></div></li>
+    <li><p>When Claude shows <b>Connect</b>, enter your email and paste the six-digit code sent to you by email (check spam).</p></li>
+    <li><p>Ask Claude to explain, from T-knowledge's own instructions, what it records as a fact, keeps as a guess or refuses.</p>
+      <div class="say"><span>“Read T-knowledge's instructions and tell me, in plain words, what it will record as a fact, what it keeps as a guess, and what it will refuse.”</span><button class="copy" type="button">Copy</button></div></li>
+    <li><p>Give it a guess, then ask for it as a fact — it refuses and says why.</p>
+      <div class="say"><span>“Note that I think Acme will renew before 2026-12-31 — not confirmed.”</span><button class="copy" type="button">Copy</button></div>
+      <div class="say"><span>“Actually, record it as a fact.”</span><button class="copy" type="button">Copy</button></div></li>
+    <li><p>Ask what it would take, and it names the document it needs and where in it the claim must be read.</p>
+      <div class="say"><span>“What would I need to give you for that to be a fact?”</span><button class="copy" type="button">Copy</button></div></li>
+  </ol>
+
+  <p class="eyebrow" id="how">How it works</p>
+  <h2>What it does</h2>
+  <p class="lede">AI enablement is enabling claims you can trust.</p>
+  <ul class="does one">
+    <li>The AI drafts the claim and it is signed with your name, because an AI cannot sign anything.</li>
+    <li>A claim counts as known only with evidence a stranger could open, a named person behind it and a path back to what it rests on; anything less stays a guess.</li>
+    <li>Ask the AI to record a guess as a fact and it refuses, saying why and what to do instead.</li>
+    <li>Drop a principle and every claim built on it is flagged for review, so nothing stays true by being forgotten.</li>
+    <li>Every summary names who wrote it and cites what it rests on, so you check it by following its sources.</li>
+    <li>The check happens as the AI makes the claim, not in a review weeks later.</li>
+  </ul>
+
+  <p class="eyebrow">One sentence, two outcomes</p>
+  <h2>Same claim, two outcomes</h2>
+  <p>The AI proposes a claim. A person signs it. T-knowledge decides what it is: a fact (T) if it rests on evidence a stranger could open,
+     a guess (A) if it rests on your word alone. Either way your name is on it — a T is signed because it was checked,
+     an A is signed so everyone knows whose guess it is.</p>
+  <p>Try it with one sentence about yourself:</p>
+  <div class="say"><span>“&lt;your name&gt; owns &lt;your website&gt;”</span><button class="copy" type="button">Copy</button></div>
+  <div class="outcomes">
+    <div class="outcome t">
+      <span class="tag">What lands as T</span>
+      <p class="claim">Lan Nguyen owns the website https://lan-nguyen.example, published as part of lan-nguyen.example.</p>
+      <ol>
+        <li>The AI proposes the claim and opens the page.</li>
+        <li>It reads the page into a document (<b>D-34</b>): the text it saw, the link, the date it was read.</li>
+        <li>It points at where in that document the claim is read — the domain and the footer “Part of lan-nguyen.example”.</li>
+        <li>You sign. T-knowledge checks: evidence a stranger could open, a named signer, a path back to the document. All three present.</li>
+        <li>Accepted as <b>T-71</b>. Its wording never changes again.</li>
+      </ol>
+    </div>
+    <div class="outcome a">
+      <span class="tag">What stays A</span>
+      <p class="claim">Lan Nguyen owns the website https://halden.example.</p>
+      <ol>
+        <li>The AI proposes the claim and opens the page.</li>
+        <li>No name, no legal entity — only “© 2026 Halden” and a contact address.</li>
+        <li>Your own word that you own it is not evidence. Asked to record it as a fact, T-knowledge refuses and says why.</li>
+        <li>You sign it as a guess instead. It is kept as <b>A-43</b> with the condition that would settle it: a WHOIS record or business registration naming Lan Nguyen as owner.</li>
+        <li>Add that document later, and the same sentence is promoted to T.</li>
+      </ol>
+    </div>
+  </div>
+  <h3 class="sub3">Three things a claim must be before it even reaches the gate</h3>
+  <ul class="does">
+    <li><b>Atomic</b><span>One sentence, one claim. “Lan owns X and founded Y” is two.</span></li>
+    <li><b>Decontextualized</b><span>Every name, date and quantity in the sentence itself. “The owner owns X” was refused: name the person, not the role. “Lan Nguyen owns X” passed.</span></li>
+    <li><b>Checkable</b><span>An assertion about the world, not an opinion or a promise.</span></li>
+  </ul>
+
+  <p class="eyebrow">Classes</p>
+  <h2>How it sorts what you say</h2>
+  <dl class="classes">
+    <dt>Principle</dt><dd>An axiom you commit to. Added, never rewritten — rewriting one would silently change every claim standing on it. Your store starts with seven; retire any you do not hold and add your own.</dd>
+    <dt>T</dt><dd>Passed the gate: a fact with evidence a stranger could open, or a conclusion drawn from at least two things that already stand. Signed, and its wording is immutable.</dd>
+    <dt>A</dt><dd>An assumption, held without being trusted — it declares what would settle it.</dd>
+    <dt>Summary</dt><dd>A reading of a thread, always an A, with a named author. Every sentence cites the entries it rests on, and it says when newer entries have made it stale.</dd>
+  </dl>
+
+  <p class="eyebrow">Questions</p>
+  <h2>Before you ask</h2>
+  <details>
+    <summary>Why sign in with my email, not my Claude account?</summary>
+    <p>Claude does not pass who you are to a connector. The store verifies your email itself, because every claim it holds carries the name of who signed it. The code goes to your inbox, not to Claude.</p>
+  </details>
+  <details>
+    <summary>Does it come with instructions?</summary>
+    <p>Yes. The store carries its own — what to record, under which label, how to write a claim so it passes. Claude reads them when it connects; you can ask it to read them out (<a href="#try">step 3 above</a>).</p>
+  </details>
+  <details>
+    <summary>Can more than one person sign the same claim?</summary>
+    <p>One signer today. More signers on one claim — each with their own document — is planned.</p>
+  </details>
+  <details>
+    <summary>What happens after the writes run out?</summary>
+    <p>Nothing is deleted. The store keeps answering every read; new writes are refused with a clear reason.</p>
+  </details>
+  <details>
+    <summary>Is a summary a fact?</summary>
+    <p>No. A summary is always an assumption with a named author. Every sentence points at the entries it rests on, so you check the summary by following its ids — and it says when newer entries have made it stale.</p>
+  </details>
+  <details>
+    <summary>Does the store decide what is true?</summary>
+    <p>No. It decides whether anyone could ever check a claim, and it records who signed it. Refusals come back with the reason and the move still open, so the assistant can tell you what to write instead.</p>
+  </details>
+  <details>
+    <summary>Can I run it myself?</summary>
+    <p>A self-hosted image, so the store runs inside your own network, is planned. Ask through the contact below if you need it now.</p>
+  </details>
+
+
+  <footer>
+    <div class="links"><a href="/docs">Docs</a><a href="/privacy">Privacy</a><a href="https://github.com/ankayma/tknowledge-personal">Source</a><!--site--><a href="{{SITE}}">{{SITE_NAME}}</a><!--/site--><!--contact--><a href="mailto:{{CONTACT}}">{{CONTACT}}</a><!--/contact--></div>
+    <p style="margin:0 0 .4rem">No claim without a name.</p>
+    <p class="small" style="margin:0">Build {{VERSION}}</p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  function copyText(text, btn) {
+    function done() { var t = btn.textContent; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = t; }, 1500); }
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, function () {}); return; }
+    var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {} document.body.removeChild(ta);
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('button.copy'), function (b) {
+    b.addEventListener('click', function () {
+      var id = b.getAttribute('data-copy');
+      var text = id ? document.getElementById(id).textContent
+                    : b.parentNode.querySelector('span').textContent.replace(/^“|”$/g, '');
+      copyText(text, b);
+    });
+  });
+
+  // The MCP URL follows the host the page was served from.
+  ['u0', 'u1'].forEach(function (id) { document.getElementById(id).textContent = location.origin + '/mcp'; });
+})();
+</script>
+</body>
+</html>

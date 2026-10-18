@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy — T-knowledge</title>
+<meta name="description" content="What T-knowledge stores, where, who else sees it, how long it is kept, and how to have it removed.">
+<style>
+  :root { --ground:#f4f6f8; --surface:#fff; --ink:#15181c; --muted:#5b6470; --line:#dbe0e6;
+          --body:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; --mono:ui-monospace,"SF Mono",Menlo,monospace; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --ground:#0f1214; --surface:#16191d; --ink:#e7eaee; --muted:#99a2ad; --line:#262c33; } }
+  :root[data-theme="dark"] { --ground:#0f1214; --surface:#16191d; --ink:#e7eaee; --muted:#99a2ad; --line:#262c33; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--ground); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.6; }
+  .wrap { max-width:46rem; margin:0 auto; padding:1.5rem 16px 4rem; }
+  nav { display:flex; justify-content:space-between; gap:1rem; font-size:.9rem; padding-bottom:1.2rem; border-bottom:1px solid var(--line); }
+  nav a { color:var(--muted); text-decoration:none; margin-left:1rem; }
+  .brand { font-family:var(--mono); letter-spacing:.12em; text-transform:uppercase; font-size:.78rem; color:var(--ink) !important; margin:0 !important; }
+  h1 { font-size:1.9rem; margin:2rem 0 .3rem; } h2 { font-size:1.2rem; margin:2rem 0 .4rem; }
+  p, li { max-width:42rem; } ul { padding-left:1.2rem; } li { margin-bottom:.35rem; }
+  a { color:inherit; text-underline-offset:3px; }
+  .small { font-size:.88rem; color:var(--muted); }
+  code { font-family:var(--mono); font-size:.88em; }
+  footer { margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--line); font-size:.85rem; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a class="brand" href="/">T-knowledge</a><span><a href="/">Home</a><a href="/docs">Docs</a><!--site--><a href="{{SITE}}">{{SITE_NAME}}</a><!--/site--></span></nav>
+
+  <h1>Privacy</h1>
+  <p class="small">Effective 3 October 2026. This page describes the service at {{HOST}}.</p>
+
+  <h2>Who runs it</h2>
+  <p>This deployment of T-knowledge is operated by whoever runs the server at {{HOST}}<!--site--> (<a href="{{SITE}}">{{SITE_NAME}}</a>)<!--/site-->. Questions and requests go through the contact at the end of this page.</p>
+
+  <h2>What is stored</h2>
+  <ul>
+    <li><b>Your email address</b> — it names you as the signer of what you write, and it is how you sign in.</li>
+    <li><b>What you write into your store</b> — principles, claims (T), assumptions (A), summaries, documents (their text and the reference you give to the original), threads, keywords, and the conversation turns you record. Each entry keeps who signed it, which assistant produced it, and when.</li>
+    <li><b>Sign-in records</b> — one-time codes and refresh tokens are kept only as hashes; registered client names and redirect addresses; the IP address a sign-in code was requested from, used to limit abuse.</li>
+    <li><b>Usage milestones</b> — for each store, whether it reached a first write, a refusal, a promotion, and where its link was opened from. These record that a step happened, never what was written.</li>
+    <li><b>Server logs</b> — the web server logs each request's IP address, time and client; it removes the request path and the authorization header, so keys and links are not logged. Application logs can contain an email address when a sign-in or an email delivery fails.</li>
+  </ul>
+  <p>The service does not store files. A document is text you provide plus a pointer to where the original lives; the original stays wherever you keep it.</p>
+
+  <h2>Where it is stored</h2>
+  <p>On a single virtual server, hosted by LightNode in Ho Chi Minh City, Vietnam. Each store is kept apart from every other store by the database itself.</p>
+
+  <h2>Who else sees it</h2>
+  <ul>
+    <li><b>Anthropic</b> — when you use the store from Claude, what you say to Claude is handled under Anthropic's terms; the store receives only the tool calls Claude makes.</li>
+    <li><b>Resend</b> — when email delivery is switched on, your address and your sign-in code or link are sent through Resend.</li>
+    <li><b>Google Fonts</b> — the web pages load their fonts from Google, which sees your IP address when you open a page.</li>
+  </ul>
+  <p>Nothing is sold, nothing is used for advertising, and nothing you write is used to train any model. There are no analytics or tracking scripts.</p>
+
+  <h2>How long it is kept</h2>
+  <p>Stores have no end date. Entries are append-only: once written they are not edited, so the record of who signed what stays intact. A trial store becomes read-only when its writes run out; it is not deleted. Sign-in codes expire after ten minutes; refresh tokens after thirty days without use. Web server logs are rotated and old ones discarded.</p>
+
+  <h2>Removing your data</h2>
+  <p>Ask through the contact below and your store, your sign-in records and your email address are removed. Removal takes the whole store; single entries are not edited out, because the ledger is append-only.</p>
+
+  <h2>Contact</h2>
+  <p><!--site--><a href="{{SITE}}">{{SITE_NAME}}</a><!--/site--><!--contact--> · <a href="mailto:{{CONTACT}}">{{CONTACT}}</a><!--/contact--></p>
+
+  <footer>Build {{VERSION}}</footer>
+</div>
+</body>
+</html>

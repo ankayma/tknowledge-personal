@@ -1,0 +1,50 @@
+{
+  "id": "job-search",
+  "name": "Job search",
+  "description": "A starting point for a job search: rules for comments and connection requests, project instructions, the principle list and the namespaces a search uses. Personal data (tracker rows, events) is not part of the template.",
+  "version": 1,
+  "namespaces": [
+    {
+      "name": "tracker",
+      "description": "one application"
+    },
+    {
+      "name": "person",
+      "description": "people"
+    },
+    {
+      "name": "thread",
+      "description": "an exchange with someone"
+    },
+    {
+      "name": "post",
+      "description": "your own posts"
+    },
+    {
+      "name": "rule",
+      "description": "decisions about the rules"
+    },
+    {
+      "name": "tk",
+      "description": "notes about this store"
+    },
+    {
+      "name": "grant",
+      "description": "grants and submissions"
+    }
+  ],
+  "rules": [
+    {
+      "title": "rules-comment-connect-filter",
+      "file": "rules-comment-connect-filter.md"
+    },
+    {
+      "title": "instructions-job-search",
+      "file": "instructions-job-search.md"
+    }
+  ],
+  "principles": {
+    "title": "principle-list",
+    "file": "principle-list.md"
+  }
+}

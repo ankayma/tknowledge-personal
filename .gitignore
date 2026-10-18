@@ -1,0 +1,13 @@
+# Go
+/bin/
+*.exe
+*.test
+*.out
+vendor/
+.env
+.DS_Store
+
+# Evidence and dumps dropped here to import into a store are personal data and
+# never go into git: `tk doc add` puts them straight into the store.
+*.zip
+*.pdf

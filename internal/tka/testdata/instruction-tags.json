@@ -1,0 +1,308 @@
+[
+ {
+  "id": "I-27",
+  "who": [
+   "agent",
+   "user",
+   "signer"
+  ],
+  "what": [
+   "term"
+  ],
+  "when": [
+   "while-answering",
+   "session-start"
+  ],
+  "where": [
+   "chat"
+  ],
+  "why": "shared vocabulary; explain a term with its why",
+  "how": "define, rationale_ref to docs"
+ },
+ {
+  "id": "I-28",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "claim",
+   "thread",
+   "document"
+  ],
+  "when": [
+   "while-answering"
+  ],
+  "where": [
+   "chat"
+  ],
+  "why": "bare indices send the reader back to old chats (8/10)",
+  "how": "content first, index in parentheses after"
+ },
+ {
+  "id": "I-29",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "message"
+  ],
+  "when": [
+   "before-draft"
+  ],
+  "where": [
+   "chat"
+  ],
+  "why": "fragments push assembly onto the owner",
+  "how": "show the whole revised draft"
+ },
+ {
+  "id": "I-30",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "message"
+  ],
+  "when": [
+   "before-draft:standard-comment"
+  ],
+  "where": [
+   "web-form",
+   "email"
+  ],
+  "why": "comments on standards must be one point per gap",
+  "how": "gap quoted → proposal → clause of owner's standard"
+ },
+ {
+  "id": "I-31",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "message"
+  ],
+  "when": [
+   "before-draft"
+  ],
+  "where": [
+   "linkedin",
+   "email"
+  ],
+  "why": "URLs cost the reader where not rendered",
+  "how": "full URL in email/forms; none on LinkedIn"
+ },
+ {
+  "id": "I-32",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "message"
+  ],
+  "when": [
+   "before-draft"
+  ],
+  "where": [
+   "linkedin",
+   "email"
+  ],
+  "why": "stale \"not yet public\" costs more than silence",
+  "how": "check at source in-session or leave it out"
+ },
+ {
+  "id": "I-34",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "message"
+  ],
+  "when": [
+   "before-draft"
+  ],
+  "where": [
+   "linkedin"
+  ],
+  "why": "connect notes that ask for work get no reply",
+  "how": "≤290 chars, \"Hi <name> —\", one purpose sentence, one yes/no question; same note for a wave"
+ },
+ {
+  "id": "I-35",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "document"
+  ],
+  "when": [
+   "before-write"
+  ],
+  "where": [
+   "store"
+  ],
+  "why": "claims without their document are uncheckable; 8 claims, 0 docs (13/10, D-97)",
+  "how": "document_add before any claim from pasted or concluded material"
+ },
+ {
+  "id": "I-36",
+  "who": [
+   "agent",
+   "owner",
+   "signer"
+  ],
+  "what": [
+   "instruction"
+  ],
+  "when": [
+   "before-write"
+  ],
+  "where": [
+   "store"
+  ],
+  "why": "humans must audit what agents were told",
+  "how": "write bilingual EN || VI"
+ },
+ {
+  "id": "I-38",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "analysis"
+  ],
+  "when": [
+   "before-analysis"
+  ],
+  "where": [
+   "store"
+  ],
+  "why": "capable chats fail at layer 2 (D-103, D-105)",
+  "how": "read principles + D-108; name principles and the damage before analysing"
+ },
+ {
+  "id": "I-39",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "principle"
+  ],
+  "when": [
+   "before-analysis"
+  ],
+  "where": [
+   "store"
+  ],
+  "why": "gloss is not a premise; principles are chosen commitments",
+  "how": "derive from canonical statement only; charter D-107"
+ },
+ {
+  "id": "I-40",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "claim"
+  ],
+  "when": [
+   "before-write"
+  ],
+  "where": [
+   "chat"
+  ],
+  "why": "low-value lists get rubber-stamped (D-110)",
+  "how": "value test; ≤5 ranked, Vietnamese reason; non-claims → document without asking"
+ },
+ {
+  "id": "I-41",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "analysis",
+   "message",
+   "document"
+  ],
+  "when": [
+   "before-analysis"
+  ],
+  "where": [
+   "store",
+   "chat"
+  ],
+  "why": "evaluation without who/why is inert; chats rarely search (D-111)",
+  "how": "state recipient's who/why as A; search at least once; record document or \"nothing found\""
+ },
+ {
+  "id": "I-42",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "message"
+  ],
+  "when": [
+   "before-draft"
+  ],
+  "where": [
+   "chat"
+  ],
+  "why": "four drafts from unasked sender assumptions (D-114)",
+  "how": "owner's purpose, recipient's role to owner, what recipient remembers — ask, record as A, then draft"
+ },
+ {
+  "id": "I-43",
+  "who": [
+   "agent",
+   "user"
+  ],
+  "what": [
+   "store"
+  ],
+  "when": [
+   "on-cost"
+  ],
+  "where": [
+   "chat"
+  ],
+  "why": "a store that costs more than it keeps goes silent (D-115)",
+  "how": "say so; stop proposing; point to feedback_url/email and support"
+ },
+ {
+  "id": "I-44",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "message"
+  ],
+  "when": [
+   "before-draft"
+  ],
+  "where": [
+   "chat"
+  ],
+  "why": "six corrections in one chat: cut information, generic subject, a menu instead of a choice (D-118)",
+  "how": "cut words not information; name the real subject; choose one option and say why"
+ },
+ {
+  "id": "I-45",
+  "who": [
+   "agent"
+  ],
+  "what": [
+   "instruction",
+   "term",
+   "document",
+   "thread"
+  ],
+  "when": [
+   "on-correction"
+  ],
+  "where": [
+   "store"
+  ],
+  "why": "corrections die with deleted chats (D-105); unthreaded corrections are found only by luck (D-118, TH-19)",
+  "how": "definition for a word, directive with date for behaviour, document for context — same turn, filed under TH-19"
+ }
+]

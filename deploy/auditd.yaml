@@ -1,0 +1,13 @@
+# auditd (CJCM) configuration in compose.
+# REDIS / AUDIT_DSN in docker-compose.yml override sources.redis / outputs.pg.
+sources:
+  redis: redis://auditd:dev@redis:6379
+  streams: [tk:ledger, cc:causes, cc:admit, cc:effects]
+  group: auditd
+window_seconds: 300   # [A 11/9] raised from 60 to absorb CDC→CJCM→checker lag; does not shrink back by itself
+late_seconds: 60
+vocabs: [a, c]
+outputs:
+  alerts_stream: aud:alerts
+  pg: postgres://audit:dev@postgres/audit
+  report: /data/audit-report.jsonl

@@ -1,0 +1,3 @@
+{"ref": "102", "statement": "AlphaCorp's FY2025 audited financials confirm repayment capacity for a $5,000,000 facility.", "mark": "T", "basis": {"kind": "fact", "note": "AlphaCorp FY2025 audited financial statements"}, "signer": "CRO", "producer": "CRO"}
+{"ref": "880", "statement": "AlphaCorp's pledged collateral is valued at $8,000,000 as of the latest independent appraisal.", "mark": "T", "basis": {"kind": "fact", "note": "Independent collateral appraisal, 2025"}, "signer": "CRO", "producer": "CRO"}
+{"ref": "905", "statement": "AlphaCorp qualifies for a $5,000,000 revolving credit facility.", "mark": "A", "producer": "loan-agent"}

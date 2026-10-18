@@ -1,0 +1,5 @@
+user default off
+user tk-cdc on >dev +hello +ping +client|setinfo ~tk:ledger +xadd
+user cc-outbox on >dev +hello +ping +client|setinfo ~cc:causes ~cc:admit ~cc:effects +xadd
+user tk-checker on >dev +hello +ping +client|setinfo ~aud:alerts +xreadgroup +xack +xgroup +xpending
+user auditd on >dev +hello +ping +client|setinfo (~tk:ledger ~cc:causes ~cc:admit ~cc:effects +xreadgroup +xack +xgroup +xpending +xlen +xrange +xinfo) (~aud:* +xadd +xlen +xrange +xtrim +xinfo +setbit +getbit +bitop +bitpos +bitcount +get +set +del +expire +exists)

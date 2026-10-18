@@ -1,0 +1,8 @@
+{
+  "id": "blank",
+  "name": "Empty store",
+  "description": "Only the default namespaces; no rules, no principles. Write your own principles with setup_principles_set.",
+  "version": 1,
+  "namespaces": [],
+  "rules": []
+}
