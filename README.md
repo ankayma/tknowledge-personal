@@ -78,6 +78,6 @@ docker build -t tknowledge/tk-personal:latest .
 
 ## Licence
 
-GNU Affero General Public License v3.0 — see [LICENSE](LICENSE). If you run a modified version as a service for others, you must offer them its source.
+Elastic License 2.0 — see [LICENSE](LICENSE). The source is open for audit. You may not offer the software to others as a hosted or managed service, nor move, change, disable or circumvent its licence key functionality. The commits published before 21 October 2026 were released under AGPL-3.0.
 
 Copyright © 2026 Bao Trinh.
